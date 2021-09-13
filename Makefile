@@ -6,7 +6,7 @@ cover_exists = $(shell ls src | grep ${cover})
 output = output.pdf
 
 all:
-	pandoc src/$(source_markdown) --template=src/templates/template.tex -o src/$(source_tex)
+	pandoc src/$(source_markdown) -F pandoc-crossref --template=src/templates/template.tex -o src/$(source_tex)
 	latexmk -outdir=src src/$(source_tex) 
 	if [ "$(cover)" = "$(cover_exists)" ]; then \
 		src/merge_pdf src/$(cover) src/$(source_pdf) out/$(output); \
@@ -15,7 +15,7 @@ all:
 	fi
 
 clean:
-	cd src;rm *.aux *.bbl *.bcf *.blg *.dvi *.fdb_latexmk *.fls *.log *.out *.run.xml *.synctex.gz
+	cd src;rm -f *.aux *.bbl *.bcf *.blg *.dvi *.fdb_latexmk *.fls *.log *.out *.run.xml *.synctex.gz
 
 reset:
-	cd src;rm *.aux *.bbl *.bcf *.blg *.dvi *.fdb_latexmk *.fls *.log *.out *.run.xml *.synctex.gz $(source_tex) $(source_pdf) ../out/$(output)
+	cd src;rm -f *.aux *.bbl *.bcf *.blg *.dvi *.fdb_latexmk *.fls *.log *.out *.run.xml *.synctex.gz $(source_tex) $(source_pdf) ../out/$(output)
